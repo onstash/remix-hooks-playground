@@ -50,10 +50,10 @@ interface HookComponentState {
   isFirstRender: boolean;
 }
 
-function validateHook(hookName: HookState["type"]): void {
+function validateHook(hookType: HookState["type"]): void {
   if (!currentComponentState) {
     throw new Error(
-      `'${hookName}' must be called within a component defined with 'createHookComponent'`,
+      `'${hookType}' must be called within a component defined with 'createHookComponent'`,
     );
   }
 
@@ -63,9 +63,9 @@ function validateHook(hookName: HookState["type"]): void {
   // On subsequent renders, validate the hook type matches
   if (!state.isFirstRender) {
     const existingHook = state.hookStates[currentIndex];
-    if (existingHook && existingHook.type !== hookName) {
+    if (existingHook && existingHook.type !== hookType) {
       throw new Error(
-        `Hook mismatch at index ${currentIndex}: expected ${existingHook.type}, but got ${hookName}. Hooks must be called in the same order on every render.`,
+        `Hook mismatch at index ${currentIndex}: expected ${existingHook.type}, but got ${hookType}. Hooks must be called in the same order on every render.`,
       );
     }
   }
